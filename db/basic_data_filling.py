@@ -1,12 +1,17 @@
+import sys
 import sqlite3
-from typing import List, Dict, Union, Any
+from typing import Dict, Union, Iterator
+from os.path import isfile
 
-from create_db import create_connection
+sys.path.insert(0, "..")
+import create_db
+from lib.help_functions import hash_str, inet_aton, query_injection
 
-# TODO: add typing to all objects
 
-
-def create_query_message(queries):
+def create_query_message(queries: Dict[str, list]) -> Iterator[str]:
+    """
+    Function for work with 'queries' variable. Returning the iterator with SQL query data from dictionary data structure
+    """
     for query_name, query_info in queries.items():
         query_message = query_info[0]
         query_data = query_info[1]
@@ -14,20 +19,23 @@ def create_query_message(queries):
             query_message = query_message.format(query_data)
             yield query_message
         elif isinstance(query_data, list):
-            for one_query_data in query_data:
-                yield query_message.format(one_query_data)
-
-
-def query_injection(conn, query_message):
-    cur = conn.cursor()
-    cur.execute(query_message)
-    return cur.lastrowid
+            if query_message.count("{}") == 1:
+                for one_query_data in query_data:
+                    yield query_message.format(one_query_data)
+            elif query_message.count("{}") > 1:
+                for one_query_data_group in query_data:
+                    yield query_message.format(*one_query_data_group)
 
 
 def main():
     database_name = "smart_house_db.db"
 
-    # TODO: add more info to table
+    if isfile(database_name):
+        conn = create_db.create_connection(database_name)
+    else:
+        create_db.main()
+        conn = create_db.create_connection(database_name)
+
     queries = {
         "query_city": ["""INSERT INTO City (city) VALUES ("{}");""", "Kyiv"],
         "query_address": ["""INSERT INTO Address (address) VALUES ("{}");""", "Khreshchatyk 1"],
@@ -75,9 +83,9 @@ def main():
                                            [[1, 1]]]
     }
 
-    conn = create_connection(database_name)
     if conn is not None:
         for query_message in create_query_message(queries):
+            # print("query_message:", query_message)
             query_injection(conn, query_message)
         conn.commit()
     else:

@@ -1,6 +1,6 @@
 import sqlite3
 from sqlite3 import Error
-from typing import List, Dict, Union, Any
+from typing import Union
 
 
 def create_connection(db_file: str) -> Union[type(sqlite3.connect), None]:
