@@ -40,7 +40,6 @@ def main():
     sql_project = """
     PRAGMA foreign_keys = OFF;
     CREATE TABLE "City"(
-    --   Table must contains the list of cities name
       "id_city" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       "city" VARCHAR(255) NOT NULL
     );
@@ -77,12 +76,10 @@ def main():
       "at_home" INTEGER DEFAULT 0
     );
     CREATE TABLE "Place"(
-    --   Table must contains the list of places
       "id_place" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       "place" VARCHAR(255) NOT NULL
     );
     CREATE TABLE "Address"(
-    --   Table must contains the list of addresses
       "id_address" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       "address" VARCHAR(255) NOT NULL
     );
@@ -112,7 +109,6 @@ def main():
     CREATE TABLE "Device"(
       "id_device" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       "DeviceType_id_device_type" INTEGER NOT NULL,
-      "LocationPlace_id_location_place" INTEGER,
       "vendor_name" VARCHAR(100),
       "vendor_model" VARCHAR(100),
       "mac_address" VARCHAR(12),

@@ -41,6 +41,38 @@ def main():
                                                                          "backyard",
                                                                          "basement"]
                         ],
+        "query_location_place": ["""INSERT INTO LocationPlace (City_id_city, Address_id_address, Place_id_place) 
+                                                                                            VALUES ({}, {}, {});""",
+                                 [[1, 1, "NULL"], [1, 1, 1], [1, 1, 2]]],
+
+        "query_connect_type": ["""INSERT INTO ConnectType (connect_type) VALUES ("{}");""", ["ssh", "telnet"]],
+        "query_auth_attribute": ["""INSERT INTO AuthAttribute (login, password) VALUES ("{}", "{}");""",
+                                 [["login", hash_str("password")]]],
+        "query_ref_auth": ["""INSERT INTO RefAuth (AuthAttribute_id_auth_attributes, ConnectType_id_connect_type) 
+                                                                                                VALUES ({}, {});""",
+                           [[1, 1]]],
+        "query_device_type": ["""INSERT INTO DeviceType (device_type) VALUES ("{}");""",
+                              ["router", "switch", "wi-fi ap", "pc", "notebook", "smartphone", "raspberrypi"]],
+        "query_device": ["""INSERT INTO Device (DeviceType_id_device_type, 
+                                                vendor_name,
+                                                vendor_model,
+                                                mac_address,
+                                                ip_address4) 
+                                                    VALUES ({}, "{}", "{}", "{}", {});""",
+                         [[1, "MikroTik", "hAP lite", "cc2de08b6f41", inet_aton("10.201.0.1")],
+                          [4, "MainPC", "MSI Z370", "309c2388b878", inet_aton("10.201.0.13")],
+                          [6, "Nokia", "6.1 Plus", "521254352521", inet_aton("10.201.0.10")]]],
+        "query_ref_device_auth": ["""INSERT INTO RefDeviceAuth (Device_id_device, RefAuth_id_ref_auth) 
+                                                                                                VALUES ({}, {});""",
+                                  [[1, 1]]],
+        "query_ref_device_location_place": ["""INSERT INTO RefDeviceLocationPlace (Device_id_device, 
+                                                                                   LocationPlace_id_location_place) 
+                                                                                                VALUES ({}, {});""",
+                                            [[1, 1], [2, 1], [3, 1], [1, 2], [2, 3]]],
+        "query_device_connection_status": ["""INSERT INTO DeviceConnectionStatus (Device_id_device, 
+                                                                                  LocationPlace_id_location_place) 
+                                                                                                VALUES ({}, {});""",
+                                           [[1, 1]]]
     }
 
     conn = create_connection(database_name)
