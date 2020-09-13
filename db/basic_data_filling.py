@@ -67,18 +67,21 @@ def main(database_name: str):
                                                     VALUES ({}, "{}", "{}", "{}", {});""",
                          [[1, "MikroTik", "hAP lite", "cc2de08b6f41", inet_aton("10.201.0.1")],
                           [4, "MainPC", "MSI Z370", "309c2388b878", inet_aton("10.201.0.13")],
-                          [6, "Nokia", "6.1 Plus", "521254352521", inet_aton("10.201.0.10")]]],
+                          [6, "Nokia", "6.1 Plus", "521254352521", inet_aton("10.201.0.10")],
+                          [6, "Xiaomi", "Redmi Note 8", "28167fe8f393", inet_aton("10.201.0.12")],
+                          [5, "Notebook MSI (wlan)", "GP62 6QF-1295XPL-BB7670H8G1T0SX", "b88198ef5295", inet_aton("10.201.0.11")]]],
         "query_ref_device_auth": ["""INSERT INTO RefDeviceAuth (Device_id_device, RefAuth_id_ref_auth) 
                                                                                                 VALUES ({}, {});""",
                                   [[1, 1]]],
         "query_ref_device_location_place": ["""INSERT INTO RefDeviceLocationPlace (Device_id_device, 
                                                                                    LocationPlace_id_location_place) 
                                                                                                 VALUES ({}, {});""",
-                                            [[1, 1], [2, 1], [3, 1], [1, 2], [2, 3]]],
+                                            [[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [1, 2], [2, 3]]],
         "query_device_connection_status": ["""INSERT INTO DeviceConnectionStatus (Device_id_device, 
                                                                                   LocationPlace_id_location_place) 
                                                                                                 VALUES ({}, {});""",
-                                           [[1, 1]]]
+                                           [[1, 1]]],
+        "query_owner_status": ["""INSERT INTO OwnerStatus (LocationPlace_id_location_place) VALUES ({});""", [1]]
     }
 
     if conn is not None:
