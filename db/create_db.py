@@ -128,6 +128,22 @@ def main(database_name: str):
         REFERENCES "Device"("id_device")
     );
     CREATE INDEX "DeviceConnectionStatus.fk_DeviceConnectionStatus_Device1_idx" ON "DeviceConnectionStatus" ("Device_id_device");
+    CREATE TRIGGER owner_check_insert AFTER INSERT
+    ON DeviceConnectionStatus
+    BEGIN
+       UPDATE OwnerStatus SET at_home =
+       CASE WHEN OwnerStatus.LocationPlace_id_location_place IN
+            (SELECT LocationPlace_id_location_place FROM DeviceConnectionStatus WHERE online = 1
+            AND id_device_connection_status != 1) THEN 1 ELSE 0 END;
+    END;
+    CREATE TRIGGER owner_check_update AFTER UPDATE
+    ON DeviceConnectionStatus
+    BEGIN
+       UPDATE OwnerStatus SET at_home =
+       CASE WHEN OwnerStatus.LocationPlace_id_location_place IN
+            (SELECT LocationPlace_id_location_place FROM DeviceConnectionStatus WHERE online = 1
+            AND id_device_connection_status != 1) THEN 1 ELSE 0 END;
+    END;
     """
     conn = create_connection(database_name)
     if conn is not None:
