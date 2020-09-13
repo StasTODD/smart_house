@@ -11,7 +11,7 @@ class SyslogUDPHandler(socketserver.BaseRequestHandler):
 
 
 def main():
-    HOST, PORT = "0.0.0.0", 555
+    HOST, PORT = "0.0.0.0", 5555
     try:
         server = socketserver.UDPServer((HOST, PORT), SyslogUDPHandler)
         server.serve_forever(poll_interval=0.5)
