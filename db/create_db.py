@@ -35,8 +35,7 @@ def create_table(conn: type(sqlite3.connect), create_table_sql: str):
         print(e)
 
 
-def main():
-    database_name = "smart_house_db.db"
+def main(database_name: str):
     sql_project = """
     PRAGMA foreign_keys = OFF;
     CREATE TABLE "City"(
@@ -140,4 +139,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    database_name = "smart_house_db.db"
+    main(database_name)

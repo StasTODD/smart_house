@@ -4,7 +4,7 @@ from typing import Dict, Union, Iterator
 from os.path import isfile
 
 sys.path.insert(0, "..")
-import create_db
+from db import create_db
 from lib.help_functions import hash_str, inet_aton, query_injection
 
 
@@ -27,13 +27,11 @@ def create_query_message(queries: Dict[str, list]) -> Iterator[str]:
                     yield query_message.format(*one_query_data_group)
 
 
-def main():
-    database_name = "smart_house_db.db"
-
+def main(database_name: str):
     if isfile(database_name):
         conn = create_db.create_connection(database_name)
     else:
-        create_db.main()
+        create_db.main(database_name)
         conn = create_db.create_connection(database_name)
 
     queries = {
@@ -94,4 +92,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    database_name = "smart_house_db.db"
+    main(database_name)
