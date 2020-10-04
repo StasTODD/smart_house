@@ -1,4 +1,4 @@
-from typing import List, Dict, Union, Any
+from typing import Dict, Union
 from pathlib import Path
 import hashlib
 import ipaddress
@@ -90,9 +90,19 @@ def query_set_connection_status(conn: type(sqlite3.connect), client_address: str
         print("Error! cannot create the database connection.")
 
 
+def query_mac_all_devices(conn: type(sqlite3.connect)) -> Union[None, str]:
+    query = """SELECT mac_address FROM Device"""
+
+    if conn is not None:
+        return query_injection(conn, query, fetch=True)
+    else:
+        print("Error! cannot create the database connection.")
+
+
 __all__ = ["create_dir",
            "hash_str",
            "inet_aton",
            "inet_ntoa",
            "syslog_message_parser",
-           "query_set_connection_status"]
+           "query_set_connection_status",
+           "query_mac_all_devices"]
