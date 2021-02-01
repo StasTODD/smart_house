@@ -67,7 +67,7 @@ def main(database_name: str):
                                                     VALUES ({}, "{}", "{}", "{}", {});""",
                          [[1, "MikroTik", "hAP lite", "cc2de08b6f41", inet_aton("10.201.0.1")],
                           [4, "MainPC", "MSI Z370", "309c2388b878", inet_aton("10.201.0.13")],
-                          [6, "Nokia", "6.1 Plus", "521254352521", inet_aton("10.201.0.10")],
+                          [6, "Google", "Pixel 4a", "58242951f51d", inet_aton("10.201.0.26")],
                           [6, "Xiaomi", "Redmi Note 8", "28167fe8f393", inet_aton("10.201.0.12")],
                           [5, "Notebook MSI (wlan)", "GP62 6QF-1295XPL-BB7670H8G1T0SX", "b88198ef5295", inet_aton("10.201.0.11")]]],
         "query_ref_device_auth": ["""INSERT INTO RefDeviceAuth (Device_id_device, RefAuth_id_ref_auth) 
