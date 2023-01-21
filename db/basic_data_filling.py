@@ -58,7 +58,7 @@ def main(database_name: str):
                                                                                                 VALUES ({}, {});""",
                            [[1, 1]]],
         "query_device_type": ["""INSERT INTO DeviceType (device_type) VALUES ("{}");""",
-                              ["router", "switch", "wi-fi ap", "pc", "notebook", "smartphone", "raspberrypi"]],
+                              ["router", "switch", "wi-fi ap", "pc", "notebook", "smartphone", "raspberrypi", "usb ethernet"]],
         "query_device": ["""INSERT INTO Device (DeviceType_id_device_type, 
                                                 vendor_name,
                                                 vendor_model,
